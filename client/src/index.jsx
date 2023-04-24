@@ -9,7 +9,17 @@ const App = () => {
   const [repos, setRepos] = useState([]);
 
   const search = (term) => {
-    console.log(`${term} was searched`);
+    $.ajax({
+      url: 'localhost:1128',
+      method: 'POST',
+      data: {username: term}
+    })
+    .done((data) => {
+      console.log("Success. We may need to update the popular repos now.")
+    })
+    .fail((err) => {
+      console.log("Error. The POST request did not work.");
+    });
   }
 
   return (
