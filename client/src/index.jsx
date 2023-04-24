@@ -10,7 +10,7 @@ const App = () => {
 
   const search = (term) => {
     $.ajax({
-      url: 'localhost:1128',
+      url: '/repos',
       method: 'POST',
       data: {username: term}
     })
