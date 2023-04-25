@@ -47,4 +47,15 @@ let save = (repos) => {
   });
 };
 
+let getTop = (limit) => {
+  return Repo.aggregate([{ $sort: { popularity: -1, _id: 1} }])
+  .then((repos) => {
+    return repos.slice(0, limit);
+  })
+  .catch((err) => {
+    console.log("There was an error getting the documents from the database");
+  })
+}
+
 module.exports.save = save;
+module.exports.getTop = getTop;

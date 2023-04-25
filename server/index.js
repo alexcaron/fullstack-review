@@ -3,6 +3,7 @@ let app = express();
 const path = require('path');
 const getReposByUsername = require(path.join(__dirname, '../helpers/github.js')).getReposByUsername;
 const saveRepos = require(path.join(__dirname, '../database/index.js')).save;
+const getTopRepos = require(path.join(__dirname, '../database/index.js')).getTop;
 app.use(express.json());
 // TODO - your code here!
 // Set up static file service for files in the `client/dist` directory.
@@ -20,7 +21,7 @@ app.post('/repos', function (req, res) {
     const repos = response.data;
     return saveRepos(repos);
   })
-  .then(() => {
+  .then((result) => {
     res.sendStat(201);
   })
   .catch((err) => {
@@ -31,6 +32,13 @@ app.post('/repos', function (req, res) {
 app.get('/repos', function (req, res) {
   // TODO - your code here!
   // This route should send back the top 25 repos
+  getTopRepos(25)
+  .then((results) => {
+    res.send(results);
+  })
+  .catch((err) => {
+    res.send(err);
+  });
 });
 
 let port = 1128;
