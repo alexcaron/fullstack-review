@@ -2,6 +2,7 @@ const express = require('express');
 let app = express();
 const path = require('path');
 const getReposByUsername = require(path.join(__dirname, '../helpers/github.js')).getReposByUsername;
+const saveRepos = require(path.join(__dirname, '../database/index.js')).save;
 app.use(express.json());
 // TODO - your code here!
 // Set up static file service for files in the `client/dist` directory.
@@ -15,9 +16,15 @@ app.post('/repos', function (req, res) {
   // and get the repo information from the github API, then
   // save the repo information in the database
   getReposByUsername(req.body.username)
-  .then((results) => {
-    console.log(results);
-    res.send();
+  .then((response) => {
+    const repos = response.data;
+    return saveRepos(repos);
+  })
+  .then(() => {
+    res.sendStat(201);
+  })
+  .catch((err) => {
+    res.send(err);
   });
 });
 
