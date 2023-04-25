@@ -8,16 +8,15 @@ import RepoList from './components/RepoList.jsx';
 const App = () => {
 
   const [repos, setRepos] = useState([]);
+  $.ajax({
+    url: '/repos',
+    method: 'get'
+  })
+  .then((data) => {
+    setRepos(data);
+  });
 
   const search = (term) => {
-    // axios.post('/repos', {username: term})
-    // .then((data) => {
-    //   console.log("Success. We may need to update the popular repos now.")
-    // })
-    // .catch((err) => {
-    //   console.log("Error. The POST request did not work.");
-    // });
-
     $.ajax({
       url: '/repos',
       method: 'post',
