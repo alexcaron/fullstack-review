@@ -6,10 +6,10 @@ const RepoList = ({ repos }) => {
       <h4> Repo List Component </h4>
       There are {repos.length} repos.
       <ol>
-        { repos.map((repo) => <li><a href={ repo.url }>{ repo.repo_name }</a></li>) }
+        { repos.map((repo) => <li><a href={ repo.url }>{ repo.repo_name }</a>{ (repo.description) ? ` - ${repo.description}` : ''}</li>) }
       </ol>
     </div>
   )
-  }
+ }
 
 export default RepoList;

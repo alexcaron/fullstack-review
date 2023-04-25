@@ -23,12 +23,21 @@ const App = () => {
       data: JSON.stringify({username: term}),
       contentType: 'application/json'
     })
-    .done((data) => {
+    .then(() => {
+      return $.ajax({
+      url: '/repos',
+      method: 'get'
+      })
+    })
+    .then((data) => {
+      setRepos(data);
+    })
+    .then(() => {
       console.log("success");
     })
-    .fail((err) => {
+    .catch((err) => {
       console.log("error");
-    })
+    });
   }
 
   return (
