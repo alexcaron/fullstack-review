@@ -15,6 +15,7 @@ let getReposByUsername = (username) => {
     }
   };
 
+  return axios.get(options);
 }
 
 module.exports.getReposByUsername = getReposByUsername;
