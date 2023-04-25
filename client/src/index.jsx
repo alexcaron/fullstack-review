@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
+import axios from 'axios';
 import Search from './components/Search.jsx';
 import RepoList from './components/RepoList.jsx';
 
@@ -9,17 +10,26 @@ const App = () => {
   const [repos, setRepos] = useState([]);
 
   const search = (term) => {
+    // axios.post('/repos', {username: term})
+    // .then((data) => {
+    //   console.log("Success. We may need to update the popular repos now.")
+    // })
+    // .catch((err) => {
+    //   console.log("Error. The POST request did not work.");
+    // });
+
     $.ajax({
       url: '/repos',
-      method: 'POST',
-      data: {username: term}
+      method: 'post',
+      data: JSON.stringify({username: term}),
+      contentType: 'application/json'
     })
     .done((data) => {
-      console.log("Success. We may need to update the popular repos now.")
+      console.log("success");
     })
     .fail((err) => {
-      console.log("Error. The POST request did not work.");
-    });
+      console.log("error");
+    })
   }
 
   return (
